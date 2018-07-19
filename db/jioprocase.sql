@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2018 at 11:09 AM
+-- Generation Time: Jul 19, 2018 at 12:27 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -46,6 +46,29 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`admin_id`, `username`, `password`, `firstname`, `lastname`, `email`, `image`, `last_login`, `status`, `created`) VALUES
 (1, 'admin', 'a096b0f0f8c7d1735803d202b2c61848', 'Admin', 'Admin', 'info@onlinefayda.com', '', '0000-00-00 00:00:00', '1', '2016-09-23 15:05:52');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `u_id` int(11) NOT NULL,
+  `f_name` varchar(150) NOT NULL,
+  `l_name` varchar(150) NOT NULL,
+  `gender` enum('M','F') NOT NULL,
+  `DOB` date NOT NULL,
+  `userName` varchar(150) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `phone_no` varchar(15) NOT NULL,
+  `user_img` text NOT NULL,
+  `referal_id` varchar(100) NOT NULL,
+  `refence_by` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `create_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -58,6 +81,13 @@ ALTER TABLE `admin`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`u_id`),
+  ADD KEY `refence_by` (`refence_by`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -66,6 +96,11 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `admin`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

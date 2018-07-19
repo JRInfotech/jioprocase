@@ -14,11 +14,11 @@ class Login extends CI_Controller{
         if ($this->administration->jio_logged_in) {
             $data['title'] = "Home";
             $data['dashboard'] = TRUE;
-            redirect('admin/home');
+            redirect('admin/Home');
         } else {
             $data['title'] = "Login";
             $data['login'] = TRUE;
-            $this->load->view('admin/login', $data);
+            $this->load->view('admin/Login', $data);
         }
     }
     public function dologin() {
@@ -26,28 +26,28 @@ class Login extends CI_Controller{
             $data['title'] = "Home";
             $data['dashboard'] = TRUE;
             //$this->load->view('admin/index', $data);
-            redirect('admin/home');
+            redirect('admin/Home');
         } else {
             
             if (!$this->input->post('submit')) {
                 $data['title'] = "Login";
                 $data['login'] = TRUE;
-                $this->load->view('admin/login', $data);
+                $this->load->view('admin/Login', $data);
             } else {
                 $username = $this->input->post('username');
                 $password = $this->input->post('password');
                 if ($this->administration->login($username, $password)) {
-                    redirect('admin/home', 'location');
+                    redirect('admin/Home', 'location');
                 } else {
                     $data['title'] = "Login";
-                    $data['msg'] = 'Invalid Login. Please try again.';
-                    $this->load->view('admin/login', $data);
+                    $data['msg'] = 'User Name Or Password is Wong .<br> Please try again.';
+                    $this->load->view('admin/Login', $data);
                 }
             }
         }
     }
     function logout() {
         $this->administration->logout();
-        redirect('admin/login');
+        redirect('admin/Login');
     }
 }
