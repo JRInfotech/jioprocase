@@ -99,9 +99,9 @@ class Login extends CI_Controller {
                         'refence_by'=>$refence_by,
                         'referral_code'=>$this->referral_code_creat()
                     );
-                    var_dump($this->user->registerNew($userInfo));die;
-                    if ($this->user->registerNew($userInfo)) {
-                        redirect('Home', 'location');
+                    $registerFlag=$this->user->registerNew($userInfo);
+                    if ($registerFlag) {
+                        redirect('checkOtp/', 'location');
                     } else {
                         $data['title'] = "Login";
                         $data['msg'] = 'User Name Or Password is Wong .<br> Please try again.';
@@ -145,5 +145,19 @@ class Login extends CI_Controller {
             $res .= $chars[mt_rand(0, strlen($chars)-1)];
         }
         return $res;
+    }
+
+    public function otpView($userDetail)
+    {
+        if ($this->user->jio_logged_in_front) {
+            $data['title'] = "Home";
+            $data['dashboard'] = TRUE;
+            redirect('Home');
+        } else {
+            $data['title'] = "Otp View";
+            $data['otp'] = TRUE;
+            $data['phoneNo']=$userDetail;
+            $this->load->view('otpView', $data);
+        }
     }
 }

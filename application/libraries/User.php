@@ -7,7 +7,7 @@ class User {
     var $table = 'user';
     var $jio_logged_in_front = False;
 
-    function User() {
+    function __construct() {
         date_default_timezone_set('Asia/Kolkata');
         $this->obj = & get_instance();
          if (!$this->jio_logged_in_front != TRUE && $this->obj->uri->segment(1) != 'login') {
@@ -127,7 +127,7 @@ class User {
                 $user = new stdClass();
                 $user->user_id =$this->obj->db->insert_id();
                 $user->username=$data['userName'];
-                $this->_start_session($user);
+                //$this->_start_session($user);
                 $key=$this->getSecureKey();
                 $data = array(
                     'user_id' => $user->user_id,
@@ -154,11 +154,7 @@ class User {
     }
     
     function logout() {
-            $data = array(
-                'logout_time' => DATETIME,
-                'is_login'=>1
-            );
-            $this->obj->of_tbl->updateSessionLogData($data,$this->obj->session->userdata('id'));
+
         $this->_destroy_session();
         $this->obj->session->set_flashdata('user', 'You are now logged out');
     }

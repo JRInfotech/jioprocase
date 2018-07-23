@@ -7,7 +7,7 @@ class Administration {
     var $jio_adminname = '';
     var $jio_table = 'admin';
     
-    function Administration() {
+    function __construct() {
         $this->obj = & get_instance();
         if (!$this->jio_logged_in != TRUE && $this->obj->uri->segment(2) != 'login') {
             redirect('admin/login');
