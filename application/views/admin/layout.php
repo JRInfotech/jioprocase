@@ -64,14 +64,14 @@ $this->load->view('admin/header');
                     </div>
                   </li>
 
-                  <li class="nav-item">
+<!--                  <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                       <i class="material-icons">person</i>
                       <p class="d-lg-none d-md-block">
                         Account
                       </p>
                     </a>
-                  </li>
+                  </li>-->
                 </ul>
 
 

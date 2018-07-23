@@ -30,19 +30,19 @@
                 </a>
                 <div class="collapse" id="collapseExample">
                     <ul class="nav">
-<!--                        <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                               <span class="sidebar-mini"> MP </span>
                               <span class="sidebar-normal"> My Profile </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                              <span class="sidebar-mini"> EP </span>
-                              <span class="sidebar-normal"> Edit Profile </span>
+                            <a class="nav-link" href="<?=  base_url('admin/login/logout'); ?>">
+                              <span class="sidebar-mini"> LG </span>
+                              <span class="sidebar-normal"> Logout </span>
                             </a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="#">
                               <span class="sidebar-mini"> S </span>
                               <span class="sidebar-normal"> Settings </span>
