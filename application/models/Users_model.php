@@ -27,9 +27,17 @@ class Users_model extends CI_Model {
         return $this->db->get('user')->row();
     }
     public function registerNew($data) {
-        return $this->db->insert('user',$data);
+        $this->db->insert('user',$data);
+        return $this->db->insert_id();
     }
     public function set_user_otp($data) {
         return $this->db->insert('user_otp',$data);
+    }
+
+    public function getUserDetail($id)
+    {
+        $this->db->where('u.u_id', $id);
+        $this->db->join('user_otp as otp','otp.user_id=u.u_id');
+        return $this->db->get('user as u')->row();
     }
 }

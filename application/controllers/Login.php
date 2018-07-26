@@ -101,7 +101,7 @@ class Login extends CI_Controller {
                     );
                     $registerFlag=$this->user->registerNew($userInfo);
                     if ($registerFlag) {
-                        redirect('checkOtp/', 'location');
+                        redirect('checkOtp/'.$registerFlag, 'location');
                     } else {
                         $data['title'] = "Login";
                         $data['msg'] = 'User Name Or Password is Wong .<br> Please try again.';
@@ -154,10 +154,26 @@ class Login extends CI_Controller {
             $data['dashboard'] = TRUE;
             redirect('Home');
         } else {
+            $userDetail=$this->users->getUserDetail($userDetail);
             $data['title'] = "Otp View";
             $data['otp'] = TRUE;
-            $data['phoneNo']=$userDetail;
+            $data['phoneNo']=$userDetail->phone_no;
+            $data['id']=$userDetail->u_id;
             $this->load->view('otpView', $data);
+        }
+    }
+
+    public function verifiedOtp()
+    {
+        $opt=$this->input->post('otp');
+        $id=$this->input->post('id');
+        $userDetail=$this->users->getUserDetail($id);
+       // echo "<prE>";print_r($userDetail);die;
+        if($userDetail->user_otp == $opt){
+            echo "login successfully..";
+        }else{
+            $this->session->set_flashdata('woringOtp','Invalid OTP <br> Please try again....');
+            redirect('checkOtp/'.$userDetail->u_id, 'location');
         }
     }
 }

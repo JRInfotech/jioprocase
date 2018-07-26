@@ -32,13 +32,22 @@
     </div>
     <div class="card">
         <div class="body">
-            <form id="forgot_password" method="POST" action="<?=  base_url('login/otpVerification');?>">
+            <form id="forgot_password" method="POST" action="<?=  base_url('login/verifiedOtp');?>">
                 <div class="card-header card-header-rose text-center">
                     <h4 class="card-title">OTP Verification</h4>
                 </div>
                 <div class="msg">
                     Please Enter the OTPs Sent to <br>Your Mobile Number <?=$phoneNo;?>
                 </div>
+                <?php
+                if($this->session->flashdata('woringOtp')) {
+                    ?>
+                    <div class="alert alert-danger" style="text-align: center">
+                        <strong><?=$this->session->flashdata('woringOtp');?></strong>
+                    </div>
+                    <?php
+                }
+                ?>
                 <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">lock</i>
@@ -47,7 +56,7 @@
                         <input type="text" class="form-control" name="otp" placeholder="One Time Password" required autofocus>
                     </div>
                 </div>
-                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="id" id="id" value="<?=$id;?>">
                 <input class="btn btn-block btn-lg bg-pink waves-effect" name="confirm"  value="CONFIRM" type="submit">
             </form>
         </div>
