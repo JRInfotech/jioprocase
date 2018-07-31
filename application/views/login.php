@@ -56,7 +56,7 @@
                             <label for="rememberme">Remember Me</label>-->
                         </div>
                         <div class="col-xs-12">
-                            <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+                            <input  class="btn btn-block bg-pink waves-effect" type="submit" value="SIGN IN" name="submit">
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
@@ -73,20 +73,35 @@
     </div>
 
     <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="<?=  base_url()?>assets/plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="<?=  base_url()?>assets/plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
+    <script src="<?=  base_url()?>assets/plugins/node-waves/waves.js"></script>
 
     <!-- Validation Plugin Js -->
-    <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+    <script src="<?=  base_url()?>assets/plugins/jquery-validation/jquery.validate.js"></script>
 
     <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/examples/sign-in.js"></script>
+    <script src="<?=  base_url()?>assets/js/admin.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#sign_in').validate({
+            highlight: function (input) {
+                console.log(input);
+                $(input).parents('.form-line').addClass('error');
+            },
+            unhighlight: function (input) {
+                $(input).parents('.form-line').removeClass('error');
+            },
+            errorPlacement: function (error, element) {
+                $(element).parents('.input-group').append(error);
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

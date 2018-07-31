@@ -28,18 +28,18 @@ class User {
     function _session_to_library() {
         // Pulls session data into the library.
 
-        $this->jio_id = $this->obj->session->userdata('id');
-        $this->jio_username = $this->obj->session->userdata('username');
+        $this->jio_id = $this->obj->session->userdata('jio_id');
+        $this->jio_username = $this->obj->session->userdata('jio_username');
         $this->jio_logged_in_front = $this->obj->session->userdata('jio_logged_in_front');
     }
 
     function _start_session($user) {
         // $user is an object sent from function login();
         // Let's build an array of data to put in the session.
-
+       
         $data = array(
-            'jio_id' => $user->user_id,
-            'jio_username' => $user->username,
+            'jio_id' => $user->u_id,
+            'jio_username' => $user->userName,
             'jio_logged_in_front' => true
         );
 
@@ -68,34 +68,35 @@ class User {
         // Prep the password to make sure we get a match.
         // And only allow active members.
 
-        $where="(username = '".$username. "' OR phone_no ='".$username."' )";
-        $this->obj->db->where($where);
-        $this->obj->db->where('password', md5($password));
-        $this->obj->db->where('status', 1);
-        $this->obj->db->where('is_deleted', 0);
-
-        $query = $this->obj->db->get($this->table, 1);
-        if ($query->num_rows() == 1) {
+        $this->obj->db->where('otp_confirm', '1');
+        $result = $this->obj->db->get($this->table)->result();
+        $loginFlage=FALSE;
+        $user = new stdClass();
+        foreach ($result as $value) {
+            if(($value->userName == $username || $value->phone_no == $username) && $value->password == md5($password)){
+                $user=$value;
+                $loginFlage = TRUE;
+            }
+        }
+        if ($loginFlage) {
             // We found a user!
             // Let's save some data in their session/cookie/pocket whatever.
-
-            $user = $query->row();
-            $resultUser=$this->obj->of_tbl->getSessionLogData($user->user_id);
-            foreach($resultUser as $row){
-                $logoutData = array(
-                    'logout_time' => DATETIME,
-                    'is_login'=>1
-                );
-                $this->obj->of_tbl->updateSessionLogData($logoutData,$row->user_id);
-            }
+//            $resultUser=$this->obj->of_tbl->getSessionLogData($user->user_id);
+//            foreach($resultUser as $row){
+//                $logoutData = array(
+//                    'logout_time' => DATETIME,
+//                    'is_login'=>1
+//                );
+//                $this->obj->of_tbl->updateSessionLogData($logoutData,$row->user_id);
+//            }
             $this->_start_session($user);
-            $token = $this->obj->of_tbl->getSecureKey();
-            $data = array(
-                'user_id' => $user->user_id,
-                'token' => $token,
-                'login_time' => DATETIME
-            );
-            $this->obj->of_tbl->addSessionLogData($data);
+//            $token = $this->obj->of_tbl->getSecureKey();
+//            $data = array(
+//                'user_id' => $user->user_id,
+//                'token' => $token,
+//                'login_time' => DATETIME
+//            );
+//            $this->obj->of_tbl->addSessionLogData($data);
             $this->obj->session->set_flashdata('user', 'Login successful...');
 
             return $user;

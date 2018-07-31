@@ -37,7 +37,17 @@ class Users_model extends CI_Model {
     public function getUserDetail($id)
     {
         $this->db->where('u.u_id', $id);
+        $this->db->where('otp.confirm', 0);
         $this->db->join('user_otp as otp','otp.user_id=u.u_id');
         return $this->db->get('user as u')->row();
+    }
+    public function updateOTPStatus($id,$otp) {
+        $this->db->where('user_id',$id);
+        $this->db->where('user_otp',$otp);
+        return $this->db->update('user_otp',array('confirm'=>1));
+    }
+    public function userOtpConfirm($id) {
+        $this->db->where('u_id',$id);
+        return $this->db->update('user',array('otp_confirm'=>'1'));
     }
 }

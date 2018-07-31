@@ -35,7 +35,6 @@ class Login extends CI_Controller {
             //$this->load->view('index', $data);
             redirect('Home');
         } else {
-            
             if (!$this->input->post('submit')) {
                 $data['title'] = "Login";
                 $data['login'] = TRUE;
@@ -155,11 +154,16 @@ class Login extends CI_Controller {
             redirect('Home');
         } else {
             $userDetail=$this->users->getUserDetail($userDetail);
-            $data['title'] = "Otp View";
-            $data['otp'] = TRUE;
-            $data['phoneNo']=$userDetail->phone_no;
-            $data['id']=$userDetail->u_id;
+            if(isset($userDetail) && count($userDetail) > 0){
+                $data['title'] = "Otp View";
+                $data['otp'] = TRUE;
+                $data['phoneNo']=$userDetail->phone_no;
+                $data['id']=$userDetail->u_id;
             $this->load->view('otpView', $data);
+            }else{
+                redirect('login');
+            }
+            
         }
     }
 
@@ -169,8 +173,17 @@ class Login extends CI_Controller {
         $id=$this->input->post('id');
         $userDetail=$this->users->getUserDetail($id);
        // echo "<prE>";print_r($userDetail);die;
-        if($userDetail->user_otp == $opt){
-            echo "login successfully..";
+        if(trim($userDetail->user_otp) == trim($opt)){
+            //Update OTP Status
+            $update=$this->users->updateOTPStatus($id,trim($opt));
+            if($update){
+                $this->users->userOtpConfirm($id);
+                $user=new stdClass();
+                $user->user_id=$id;
+                $user->username=$userDetail->userName;
+                $this->user->_start_session($user);
+                redirect('Home','location');
+            }
         }else{
             $this->session->set_flashdata('woringOtp','Invalid OTP <br> Please try again....');
             redirect('checkOtp/'.$userDetail->u_id, 'location');

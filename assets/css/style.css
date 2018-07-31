@@ -7487,24 +7487,27 @@ fieldset[disabled] .form-control {
   -ms-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 11 !important; }
-  .sidebar .legal {
-    position: absolute;
+   .legal {
+    position: fixed;
     bottom: 0;
     width: 100%;
     border-top: 1px solid #eee;
     padding: 15px;
-    overflow: hidden; }
-    .sidebar .legal .copyright {
+    overflow: hidden; 
+    z-index: 10000;
+    left: 21%;
+   }
+    .legal .copyright {
       font-size: 13px;
       white-space: nowrap;
       -ms-text-overflow: ellipsis;
       -o-text-overflow: ellipsis;
       text-overflow: ellipsis;
       overflow: hidden; }
-      .sidebar .legal .copyright a {
+      .legal .copyright a {
         font-weight: bold;
         text-decoration: none; }
-    .sidebar .legal .version {
+    .legal .version {
       white-space: nowrap;
       -ms-text-overflow: ellipsis;
       -o-text-overflow: ellipsis;
@@ -7512,6 +7515,21 @@ fieldset[disabled] .form-control {
       overflow: hidden;
       margin-top: 5px;
       font-size: 13px; }
+   .sidebar .refarral_by {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding: 15px;
+    overflow: hidden; 
+   }
+   .sidebar .refarral_by  {
+      font-size: 13px;
+      white-space: nowrap;
+      -ms-text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      overflow: hidden; }
   .sidebar .user-info {
     padding: 13px 15px 12px 15px;
     white-space: nowrap;

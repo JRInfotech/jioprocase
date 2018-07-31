@@ -53,5 +53,6 @@ $route['default_controller'] = 'login';
 $route['admin'] = 'admin/Login';
 $route['checkOtp/(:any)'] = 'login/otpView/$1';
 $route['admin/logout'] = 'admin/Login/logout';
+$route['logout'] = 'Login/logout';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
