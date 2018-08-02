@@ -159,7 +159,7 @@ class Login extends CI_Controller {
                 $data['otp'] = TRUE;
                 $data['phoneNo']=$userDetail->phone_no;
                 $data['id']=$userDetail->u_id;
-            $this->load->view('otpView', $data);
+                $this->load->view('otpView', $data);
             }else{
                 redirect('login');
             }

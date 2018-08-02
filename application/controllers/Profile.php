@@ -7,11 +7,11 @@
  */
 
 /**
- * Description of Home
+ * Description of Profile
  *
  * @author Developer
  */
-class Home extends CI_Controller {
+class Profile extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('user');
@@ -20,8 +20,8 @@ class Home extends CI_Controller {
         }
     }
     public function index() {
-        $data['title']="Dashboard";
-        $data['view']="dashboard";
+        $data['title']="Profile";
+        $data['view']="profile";
         $this->load->view('layout',$data);
     }
 }

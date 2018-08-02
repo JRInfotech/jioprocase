@@ -7488,14 +7488,12 @@ fieldset[disabled] .form-control {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 11 !important; }
    .legal {
-    position: fixed;
     bottom: 0;
     width: 100%;
     border-top: 1px solid #eee;
     padding: 15px;
     overflow: hidden; 
     z-index: 10000;
-    left: 21%;
    }
     .legal .copyright {
       font-size: 13px;

@@ -6,12 +6,17 @@ class User {
     var $jio_username = '';
     var $table = 'user';
     var $jio_logged_in_front = False;
+    var $jio_active = False;
 
     function __construct() {
         date_default_timezone_set('Asia/Kolkata');
         $this->obj = & get_instance();
-         if (!$this->jio_logged_in_front != TRUE && $this->obj->uri->segment(1) != 'login') {
+        if (!$this->jio_logged_in_front != TRUE && strtoupper($this->obj->uri->segment(1)) != strtoupper('login')) {
             redirect('login');
+            exit;
+        }
+        if($this->jio_active != TRUE && strtoupper($this->obj->uri->segment(1)) != strtoupper('login') ){
+            redirect('ActiveAccount');
             exit;
         }
         $this->obj->load->model('Users_model','users');
@@ -31,6 +36,7 @@ class User {
         $this->jio_id = $this->obj->session->userdata('jio_id');
         $this->jio_username = $this->obj->session->userdata('jio_username');
         $this->jio_logged_in_front = $this->obj->session->userdata('jio_logged_in_front');
+        $this->jio_active = $this->obj->session->userdata('jio_active');
     }
 
     function _start_session($user) {
@@ -40,7 +46,8 @@ class User {
         $data = array(
             'jio_id' => $user->u_id,
             'jio_username' => $user->userName,
-            'jio_logged_in_front' => true
+            'jio_logged_in_front' => true,
+            'jio_active'=>$user->active
         );
 
         $this->obj->session->set_userdata($data);
@@ -89,6 +96,11 @@ class User {
 //                );
 //                $this->obj->of_tbl->updateSessionLogData($logoutData,$row->user_id);
 //            }
+            
+            $user->active=FALSE;
+            if($user->status != 0){
+                $user->active=TRUE;
+            }
             $this->_start_session($user);
 //            $token = $this->obj->of_tbl->getSecureKey();
 //            $data = array(
@@ -158,45 +170,6 @@ class User {
 
         $this->_destroy_session();
         $this->obj->session->set_flashdata('user', 'You are now logged out');
-    }
-
-    public function getMemberPermission($menu) {
-        $data = $this->obj->common->getMemberModulePermission($this->obj->session->userdata('id'));
-        if (isset($data['permission_data'])) {
-            foreach ($data['permission_data'] as $value) {
-                foreach ($value->member_permission as $row) {
-                    if ($row->module_slug == $menu) {
-                        $data['user_access'][] = $row;
-                    }
-                    if($menu == 'returns'){
-                        if ($row->module_slug == 'return_main' || $row->module_slug == 'return_manage' || $row->module_slug == 'return_receipt' || $row->module_slug == 'po_order') {
-                            $data['user_access'][] = $row;
-                        }
-                    }
-                    if($menu == 'portal_store'){
-                        if ($row->module_slug == 'portal' || $row->module_slug == 'store' || $row->module_slug =='sub_store' || $row->module_slug == 'tp_price' ) {
-                            $data['user_access'][] = $row;
-                        }
-                    }
-                    if($menu == 'orders'){
-                        if ($row->module_slug == 'po' || $row->module_slug == 'so' || $row->module_slug == 'ds') {
-                            $data['user_access'][] = $row;
-                        }
-                    }
-                    if($menu == 'warehouse'){
-                        if ($row->module_slug == 'rack' || $row->module_slug == 'barcode' || $row->module_slug == 'instock' || $row->module_slug == 'check_product' || $row->module_slug == 'shift_product' || $row->module_slug == 'test_barcode' || $row->module_slug == 'check_rack') {
-                            $data['user_access'][] = $row;
-                        }
-                    }
-                    if($menu == 'cms'){
-                        if ($row->module_slug == 'pnl' || $row->module_slug == 'i_zone' || $row->module_slug == 'order_type' || $row->module_slug == 'courier_type' || $row->module_slug == 'consignment' || $row->module_slug == 'ads') {
-                            $data['user_access'][] = $row;
-                        }
-                    }
-                }
-            }
-        }
-        return $data;
     }
     public function otp_create() {
         $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

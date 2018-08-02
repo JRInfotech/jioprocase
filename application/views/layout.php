@@ -25,7 +25,6 @@
         <?php $this->load->view('left_bar'); ?>
         <section class="content">
             <?php $this->load->view($view); ?>
-        </section>
         <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
@@ -36,6 +35,7 @@
                 </div>
             </div>
             <!-- #Footer -->
+        </section>
     </section>
     <?php $this->load->view('common_js') ?>
 </body>

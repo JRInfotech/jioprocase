@@ -7,21 +7,23 @@
  */
 
 /**
- * Description of Home
+ * Description of ActiveAccount
  *
  * @author Developer
  */
-class Home extends CI_Controller {
+class ActiveAccount extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->library('user');
-        if ($this->session->userdata('jio_logged_in_front') != true) {
-            redirect('login');
-        }
+        
     }
     public function index() {
-        $data['title']="Dashboard";
-        $data['view']="dashboard";
+        $data['title']="Active Account";
+        $data['view']="activeAccount";
+        $this->load->view('layout',$data);
+    }
+    public function activePlane() {
+        $data['title']="Active Plane";
+        $data['view']="activePlane";
         $this->load->view('layout',$data);
     }
 }

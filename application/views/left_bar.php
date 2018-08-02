@@ -6,7 +6,7 @@
                     <img src="<?=  base_url()?>assets/images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$this->user->jio_username;?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$this->session->userdata('jio_username');?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -20,7 +20,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="active">
-                        <a href="index.html">
+                        <a href="<?=  base_url('Home');?>">
                             <i class="material-icons">dashboard</i>
                             <span>DASHBOARD</span>
                         </a>
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="<?=  base_url('Profile');?>">
                             <i class="material-icons">person</i>
                             <span>Profile</span>
                         </a>
